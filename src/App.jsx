@@ -1,15 +1,21 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
-import { getCollectionData } from './services/googleSheets'
+import { getCollectionData } from './services/googleSheets.js'
+import CollectionTable from './components/CollectionTable.jsx'
 
 function App() {
+  const [students, setStudents] = useState([])
+
   useEffect(() => {
     async function fetchData() {
       try {
         const data = await getCollectionData()
 
-        console.log("Google Sheet Data:")
-        console.log(data)
+        const studentData = data.filter(
+          (student) => student['Roll Number'] !== 'Total'
+        )
+
+        setStudents(studentData)
       } catch (error) {
         console.log("Failed to fetch Google Sheet: ", error)
       }
@@ -22,7 +28,10 @@ function App() {
     <>
       <div>
         <h1>Teachers' Day Collection Tracker</h1>
-        <p>Checking Google Sheet connection...</p>
+
+        <p>Total Students: {students.length}</p>
+
+        <CollectionTable students={students} />
       </div>
     </>
   )
