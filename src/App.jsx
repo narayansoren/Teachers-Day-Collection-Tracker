@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import { getCollectionData } from './services/googleSheets.js'
 import CollectionTable from './components/CollectionTable.jsx'
 import SummaryCards from './components/SummaryCards.jsx'
