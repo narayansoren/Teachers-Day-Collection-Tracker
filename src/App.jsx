@@ -24,12 +24,36 @@ function App() {
     fetchData()
   }, [])
 
+  function parseAmount(amount) {
+    return Number(amount.replace(/[₹,]/g, ''))
+  }
+
+  const totalDue = students.reduce(
+    (total, student) => total + parseAmount(student["Amount Due"]),
+    0
+  )
+
+  const totalPaid = students.reduce(
+    (total, student) => total + parseAmount(student["Amount Paid"]),
+    0
+  )
+
+  const pendingAmount = totalDue - totalPaid
+
   return (
     <>
       <div>
         <h1>Teachers' Day Collection Tracker</h1>
 
-        <p>Total Students: {students.length}</p>
+        <div>
+          <p>Total Students: {students.length}</p>
+
+          <p>Total Due: ₹{totalDue}</p>
+
+          <p>Total Paid: ₹{totalPaid}</p>
+
+          <p>Pending: ₹{pendingAmount}</p>
+        </div>
 
         <CollectionTable students={students} />
       </div>
