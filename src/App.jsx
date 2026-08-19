@@ -5,6 +5,7 @@ import SummaryCards from './components/SummaryCards.jsx'
 
 function App() {
   const [students, setStudents] = useState([])
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
     async function fetchData() {
@@ -40,6 +41,17 @@ function App() {
 
   const pendingAmount = totalDue - totalPaid
 
+  const filteredStudents = students.filter((student) => {
+    const searchTerm = search.toLowerCase()
+
+    const rollNumber = student["Roll Number"].toLowerCase()
+    const studentName = student["Student Name"].toLowerCase()
+
+    return (
+      rollNumber.includes(searchTerm) || studentName.includes(searchTerm)
+    )
+  })
+
   return (
     <>
       <div>
@@ -52,7 +64,15 @@ function App() {
           pendingAmount={pendingAmount}
         />
 
-        <CollectionTable students={students} />
+        <div className="search-container">
+          <input type="search"
+            placeholder='Search by name or roll number...'
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          />
+        </div>
+
+        <CollectionTable students={filteredStudents} />
       </div>
     </>
   )
