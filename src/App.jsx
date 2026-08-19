@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { getCollectionData } from './services/googleSheets.js'
 import CollectionTable from './components/CollectionTable.jsx'
+import SummaryCards from './components/SummaryCards.jsx'
 
 function App() {
   const [students, setStudents] = useState([])
@@ -45,15 +46,12 @@ function App() {
       <div>
         <h1>Teachers' Day Collection Tracker</h1>
 
-        <div>
-          <p>Total Students: {students.length}</p>
-
-          <p>Total Due: ₹{totalDue}</p>
-
-          <p>Total Paid: ₹{totalPaid}</p>
-
-          <p>Pending: ₹{pendingAmount}</p>
-        </div>
+        <SummaryCards
+          totalStudents={students.length}
+          totalDue={totalDue}
+          totalPaid={totalPaid}
+          pendingAmount={pendingAmount}
+        />
 
         <CollectionTable students={students} />
       </div>
