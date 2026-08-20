@@ -14,6 +14,9 @@ function App() {
   const [sortBy, setSortBy] = useState("")
   const [sortOrder, setSortOrder] = useState("asc")
 
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage] = useState(5)
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -121,6 +124,17 @@ function App() {
     return 0
   })
 
+  const totalPages = Math.ceil(
+    sortedStudents.length / itemsPerPage
+  )
+
+  const startIndex = (currentPage - 1) * itemsPerPage
+
+  const currentStudents = sortedStudents.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  )
+
   return (
     <>
       <div>
@@ -201,7 +215,27 @@ function App() {
           </select>
         </div>
 
-        <CollectionTable students={sortedStudents} />
+        <CollectionTable students={currentStudents} />
+
+        <div className="pagination">
+          <button
+            onClick={() => setCurrentPage((page) => page - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+
+          <button
+            onClick={() => setCurrentPage((page) => page + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </>
   )
