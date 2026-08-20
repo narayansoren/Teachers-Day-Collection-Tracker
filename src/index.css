@@ -45,6 +45,29 @@ body {
   }
 }
 
+.sort-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.sort-controls select {
+  padding: 0.7rem 1rem;
+  border: 1px solid #333;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .sort-controls {
+    flex-direction: column;
+  }
+
+  .sort-controls select {
+    width: 100%;
+  }
+}
+
 .table-container {
   width: 100%;
   overflow-x: auto;

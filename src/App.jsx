@@ -11,6 +11,9 @@ function App() {
   const [semesterFilter, setSemesterFilter] = useState("")
   const [statusFilter, setStatusFilter] = useState("")
 
+  const [sortBy, setSortBy] = useState("")
+  const [sortOrder, setSortOrder] = useState("asc")
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -87,6 +90,37 @@ function App() {
     )
   })
 
+  const sortedStudents = [...filteredStudents].sort((a, b) => {
+    if (!sortBy) {
+      return 0
+    }
+
+    let valueA = a[sortBy]
+    let valueB = b[sortBy]
+
+    if (sortBy === "Amount Due" || sortBy === "Amount Paid") {
+      valueA = parseAmount(valueA)
+      valueB = parseAmount(valueB)
+
+      return sortOrder === "asc"
+        ? valueA - valueB
+        : valueB - valueA
+    }
+
+    valueA = valueA.toLowerCase()
+    valueB = valueB.toLowerCase()
+
+    if (valueA < valueB) {
+      return sortOrder === "asc" ? -1 : 1
+    }
+
+    if (valueA > valueB) {
+      return sortOrder === "asc" ? 1 : -1
+    }
+
+    return 0
+  })
+
   return (
     <>
       <div>
@@ -147,7 +181,27 @@ function App() {
           </select>
         </div>
 
-        <CollectionTable students={filteredStudents} />
+        <div className="sort-controls">
+          <select
+            value={sortBy}
+            onChange={(event) => setSortBy(event.target.value)}
+          >
+            <option value="">Sort By</option>
+            <option value="Student Name">Student Name</option>
+            <option value="Amount Due">Amount Due</option>
+            <option value="Amount Paid">Amount Paid</option>
+          </select>
+
+          <select
+            value={sortOrder}
+            onChange={(event) => setSortOrder(event.target.value)}
+          >
+            <option value="asc">Ascending ↑</option>
+            <option value="desc">Descending ↓</option>
+          </select>
+        </div>
+
+        <CollectionTable students={sortedStudents} />
       </div>
     </>
   )
