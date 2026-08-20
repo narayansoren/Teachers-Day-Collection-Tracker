@@ -17,18 +17,22 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage] = useState(5)
 
+  const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     async function fetchData() {
       try {
         const data = await getCollectionData()
 
         const studentData = data.filter(
-          (student) => student['Roll Number'] !== 'Total'
+          (student) => student["Roll Number"] !== "Total"
         )
 
         setStudents(studentData)
       } catch (error) {
         console.log("Failed to fetch Google Sheet: ", error)
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -134,6 +138,14 @@ function App() {
     startIndex,
     startIndex + itemsPerPage
   )
+
+  if (loading) {
+    return (
+      <div className="loading">
+        <p>Loading collection data...</p>
+      </div>
+    )
+  }
 
   return (
     <>
