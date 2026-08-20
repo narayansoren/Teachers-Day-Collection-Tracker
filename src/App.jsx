@@ -164,10 +164,19 @@ function App() {
   }
 
   return (
-    <>
-      <div>
-        <h1>Teachers' Day Collection Tracker</h1>
+    <div className="app-container">
+      <header className="app-header">
+        <div className="header-title-row">
+          <h1>Teachers' Day Collection Tracker</h1>
+          <div className="refresh-container">
+            <button onClick={() => fetchData(true)}>
+              Refresh Data
+            </button>
+          </div>
+        </div>
+      </header>
 
+      <main className="app-main">
         <SummaryCards
           totalStudents={students.length}
           totalDue={totalDue}
@@ -175,81 +184,80 @@ function App() {
           pendingAmount={pendingAmount}
         />
 
-        <div className="refresh-container">
-          <button onClick={() => fetchData(true)}>
-            Refresh Data
-          </button>
-        </div>
+        <section className="controls-section">
+          <div className="search-container">
+            <input
+              type="search"
+              placeholder="Search by name or roll number..."
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+          </div>
 
-        <div className="search-container">
-          <input type="search"
-            placeholder='Search by name or roll number...'
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-          />
-        </div>
+          <div className="controls-grid">
+            <div className="filters">
+              <select
+                value={branchFilter}
+                onChange={(event) => setBranchFilter(event.target.value)}
+              >
+                <option value="">All Branches</option>
+                {branches.map((branch) => (
+                  <option key={branch} value={branch}>
+                    {branch}
+                  </option>
+                ))}
+              </select>
 
-        <div className="filters">
-          <select
-            value={branchFilter}
-            onChange={(event) => setBranchFilter(event.target.value)}
-          >
-            <option value="">All Branches</option>
+              <select
+                value={semesterFilter}
+                onChange={(event) => setSemesterFilter(event.target.value)}
+              >
+                <option value="">All Semesters</option>
+                {semesters.map((semester) => (
+                  <option key={semester} value={semester}>
+                    {semester}
+                  </option>
+                ))}
+              </select>
 
-            {branches.map((branch) => (
-              <option key={branch} value={branch}>
-                {branch}
-              </option>
-            ))}
-          </select>
+              <select
+                value={statusFilter}
+                onChange={(event) => setStatusFilter(event.target.value)}
+              >
+                <option value="">All Statuses</option>
+                {statuses.map((status) => (
+                  <option key={status} value={status}>
+                    {status}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <select
-            value={semesterFilter}
-            onChange={(event) => setSemesterFilter(event.target.value)}
-          >
-            <option value="">All Semesters</option>
-            {semesters.map((semester) => (
-              <option key={semester} value={semester}>
-                {semester}
-              </option>
-            ))}
-          </select>
+            <div className="sort-controls">
+              <select
+                value={sortBy}
+                onChange={(event) => setSortBy(event.target.value)}
+              >
+                <option value="">Sort By</option>
+                <option value="Student Name">Student Name</option>
+                <option value="Amount Due">Amount Due</option>
+                <option value="Amount Paid">Amount Paid</option>
+              </select>
 
-          <select
-            value={statusFilter}
-            onChange={(event) => setStatusFilter(event.target.value)}
-          >
-            <option value="">All Statuses</option>
+              <select
+                value={sortOrder}
+                onChange={(event) => setSortOrder(event.target.value)}
+              >
+                <option value="asc">Ascending ↑</option>
+                <option value="desc">Descending ↓</option>
+              </select>
+            </div>
+          </div>
+        </section>
 
-            {statuses.map((status) => (
-              <option key={status} value={status}>
-                {status}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="sort-controls">
-          <select
-            value={sortBy}
-            onChange={(event) => setSortBy(event.target.value)}
-          >
-            <option value="">Sort By</option>
-            <option value="Student Name">Student Name</option>
-            <option value="Amount Due">Amount Due</option>
-            <option value="Amount Paid">Amount Paid</option>
-          </select>
-
-          <select
-            value={sortOrder}
-            onChange={(event) => setSortOrder(event.target.value)}
-          >
-            <option value="asc">Ascending ↑</option>
-            <option value="desc">Descending ↓</option>
-          </select>
-        </div>
-
-        <CollectionTable students={currentStudents} />
+        <section className="table-section">
+          <CollectionTable students={currentStudents} />
+        </section>
 
         <div className="pagination">
           <button
@@ -270,8 +278,14 @@ function App() {
             Next
           </button>
         </div>
-      </div>
-    </>
+      </main>
+
+      <footer className="app-footer">
+        <a href="#" target="_blank" rel="noopener noreferrer">
+          Made with Love
+        </a>
+      </footer>
+    </div>
   )
 }
 

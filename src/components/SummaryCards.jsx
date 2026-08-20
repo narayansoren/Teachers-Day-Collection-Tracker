@@ -7,23 +7,23 @@ function SummaryCards({
     return (
         <div className="summary-cards">
             <div className="summary-card">
-                <p>Total Students</p>
-                <h2>{totalStudents}</h2>
+                <p className="summary-card-label">Total Students</p>
+                <h2 className="summary-card-value">{totalStudents}</h2>
             </div>
 
             <div className="summary-card">
-                <p>Total Due</p>
-                <h2>₹{totalDue}</h2>
+                <p className="summary-card-label">Total Due</p>
+                <h2 className="summary-card-value">₹{totalDue}</h2>
             </div>
 
             <div className="summary-card">
-                <p>Total Paid</p>
-                <h2>₹{totalPaid}</h2>
+                <p className="summary-card-label">Total Paid</p>
+                <h2 className="summary-card-value">₹{totalPaid}</h2>
             </div>
 
             <div className="summary-card">
-                <p>Pending Amount</p>
-                <h2>₹{pendingAmount}</h2>
+                <p className="summary-card-label">Pending Amount</p>
+                <h2 className="summary-card-value">₹{pendingAmount}</h2>
             </div>
         </div>
     )

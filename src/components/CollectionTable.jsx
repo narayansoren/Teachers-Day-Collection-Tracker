@@ -22,12 +22,16 @@ function CollectionTable({ students }) {
                     {students.map((student) => (
                         <tr key={student["Roll Number"]}>
                             <td>{student["Roll Number"]}</td>
-                            <td>{student["Student Name"]}</td>
+                            <td className="student-name-cell">{student["Student Name"]}</td>
                             <td>{student["Branch"]}</td>
                             <td>{student["Semester"]}</td>
-                            <td>{student["Amount Due"]}</td>
-                            <td>{student["Amount Paid"]}</td>
-                            <td>{student["Status"]}</td>
+                            <td className="amount-cell">{student["Amount Due"]}</td>
+                            <td className="amount-cell">{student["Amount Paid"]}</td>
+                            <td>
+                                <span className={`status-badge status-${(student["Status"] || '').toLowerCase().replace(/\s+/g, '-')}`}>
+                                    {student["Status"]}
+                                </span>
+                            </td>
                             <td>{student["Payment Mode"]}</td>
                             <td>{student["Date of Payment"]}</td>
                             <td>{student["Collected By"]}</td>
