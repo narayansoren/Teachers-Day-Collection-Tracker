@@ -18,24 +18,30 @@ function App() {
   const [itemsPerPage] = useState(5)
 
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  async function fetchData() {
+    try {
+      setLoading(true)
+      setError(null)
+
+      const data = await getCollectionData()
+
+      const studentData = data.filter(
+        (student) => student["Roll Number"] !== "Total"
+      )
+
+      setStudents(studentData)
+    } catch (error) {
+      console.log("Failed to fetch Google Sheet: ", error)
+
+      setError("Unable to load collection data.")
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getCollectionData()
-
-        const studentData = data.filter(
-          (student) => student["Roll Number"] !== "Total"
-        )
-
-        setStudents(studentData)
-      } catch (error) {
-        console.log("Failed to fetch Google Sheet: ", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
     fetchData()
   }, [])
 
@@ -143,6 +149,16 @@ function App() {
     return (
       <div className="loading">
         <p>Loading collection data...</p>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="error">
+        <p>{error}</p>
+
+        <button onClick={fetchData}>Retry</button>
       </div>
     )
   }
