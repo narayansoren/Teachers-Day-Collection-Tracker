@@ -1,6 +1,6 @@
 import Papa from 'papaparse'
 
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTI_AXiz8-fie7T66clYCFmk5SRjvKjGIuzUz4wJYPS0E-3gAP3klDAUTGZO6XUhtFvS3YnMsPMSitg/pub?output=csv"
+const SHEET_URL = import.meta.env.VITE_GOOGLE_SHEET_URL
 
 export function getCollectionData() {
     return new Promise((resolve, reject) => {
