@@ -30,6 +30,19 @@ body {
   cursor: pointer;
 }
 
+.refresh-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.refresh-container button {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 .search-container {
   margin-bottom: 1rem;
 }

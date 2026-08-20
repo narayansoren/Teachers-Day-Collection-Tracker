@@ -20,12 +20,12 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  async function fetchData() {
+  async function fetchData(forceRefresh = false) {
     try {
       setLoading(true)
       setError(null)
 
-      const data = await getCollectionData()
+      const data = await getCollectionData(forceRefresh)
 
       const studentData = data.filter(
         (student) => student["Roll Number"] !== "Total"
@@ -174,6 +174,12 @@ function App() {
           totalPaid={totalPaid}
           pendingAmount={pendingAmount}
         />
+
+        <div className="refresh-container">
+          <button onClick={() => fetchData(true)}>
+            Refresh Data
+          </button>
+        </div>
 
         <div className="search-container">
           <input type="search"
